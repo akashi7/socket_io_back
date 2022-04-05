@@ -65,7 +65,7 @@ exports.Login = async (req, res) => {
         }
         else {
           const { id, username } = result[0];
-          const token = sign({ id, email, username }, 'Akashikabuto7', { expiresIn: '24h' });
+          const token = sign({ id, email, username }, process.env.JWT_SECRET, { expiresIn: '24h' });
           res.send({
             status: 200,
             token

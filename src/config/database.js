@@ -4,10 +4,10 @@ const { config } = require("dotenv");
 config();
 
 const db = createPool({
-  host: "localhost",
-  database: 'tracker',
-  user: 'root',
-  password: 'Akashikabuto7'
+  host: process.env.HOST,
+  database: process.env.DATABASE,
+  user: process.env.USER,
+  password: process.env.PASSWORD
 });
 
 
