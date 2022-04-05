@@ -37,7 +37,7 @@ io.use(function (socket, next) {
 io.on('connection', (socket) => {
   console.log("Connected: " + socket.userId);
   socket.on("disconnect", () => {
-    console.log("Disconnected: " + socket.userId);
+    console.log("User Disconnected: " + socket.userId);
   });
   socket.on("joinRoom", ({ chatroomId }) => {
     socket.join(chatroomId);
