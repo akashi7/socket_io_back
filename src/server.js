@@ -1,30 +1,28 @@
 const { db } = require('./config/database');
 const http = require('http');
 const { v4: uuidv4 } = require('uuid');
-
+const { config } = require("dotenv");
 const { verify } = require('jsonwebtoken');
+
+config();
+
+
 
 
 const app = require('./index');
-
 const server = http.createServer(app);
-
 const PORT = process.env.PORT || 7000;
-
 server.listen(PORT, () => {
   console.log("API starting at PORT " + PORT);
 });
-
-
 const io = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:3000',
   }
 });
-
 io.use(function (socket, next) {
   let { token } = socket.handshake.query;
-  verify(token, 'Akashikabuto7', (err, decoded) => {
+  verify(token, `${process.env.JWT_SECRET}`, (err, decoded) => {
     if (err) console.log(err);
     else {
       socket.userId = decoded.id;
@@ -34,7 +32,7 @@ io.use(function (socket, next) {
   });
 });
 
-
+//
 
 io.on('connection', (socket) => {
   console.log("Connected: " + socket.userId);
@@ -85,6 +83,4 @@ io.on('connection', (socket) => {
       });
     }
   });
-
-
 });
